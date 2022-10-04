@@ -150,5 +150,9 @@ RUN rm -rf /tmp/.X11-unix /tmp/.X32-lock
 COPY entry.sh entry.sh
 COPY functions.sh functions.sh
 
+WORKDIR /usr/share/cmake
+git apply /patch_to_125f6964.txt
+WORKDIR /
+
 ENV LANG C.UTF-8
 ENTRYPOINT ["/entry.sh"]
