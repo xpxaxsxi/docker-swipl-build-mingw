@@ -147,12 +147,16 @@ RUN export DISPLAY=:32 && \
     unzip -qq /${OPENJDK32}
 RUN rm -rf /tmp/.X11-unix /tmp/.X32-lock
 
+
+COPY patch.txt /patch.txt
 #patch NSIS.template.ini to latest release version 
 WORKDIR /usr/share/cmake
 RUN curl https://gitlab.kitware.com/cmake/cmake/-/commit/b56e0f46892f4108ec9ef883f7e598eed25eb739.patch|git apply - && \ 
 curl https://gitlab.kitware.com/cmake/cmake/-/commit/b795c96727c28982f88fcaf7127bd72067edcf4a.patch|git apply - && \
 curl https://gitlab.kitware.com/cmake/cmake/-/commit/5d2ceaada8b84990d828e3c98ea4f6418cac9893.patch|git apply - && \
-curl https://gitlab.kitware.com/cmake/cmake/-/commit/125f6964ba40905c452e92810a705507a0958ade.patch|git apply -
+curl https://gitlab.kitware.com/cmake/cmake/-/commit/125f6964ba40905c452e92810a705507a0958ade.patch|git apply - &&\
+#add new variable CPACK_NSIS_ONINST_REGVIEW
+git apply /patch.txt
 WORKDIR /
 
 COPY entry.sh entry.sh
