@@ -32,7 +32,8 @@ build_win64()
           -G Ninja ..
     timeout -k 2m 1h ninja $nopts
     timeout -k 2m 1h ninja $nopts
-    cpack
+    cpack -D CPACK_NSIS_EXTRA_UNINSTALL_COMMANDS='SetRegView 64' \
+	  -D CPACK_NSIS_ONINIT_REGVIEW='SetRegView 64'
   )
 }
 
